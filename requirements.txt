@@ -1,0 +1,23 @@
+# Web API and request validation
+fastapi
+uvicorn[standard]
+python-multipart
+python-dotenv
+pydantic
+sqlalchemy
+httpx
+google-search-results
+# Agent orchestration, model access, and local vector retrieval
+langchain-core
+langchain-community
+langchain-openai
+langchain-chroma
+langchain-text-splitters
+langchain-huggingface
+langchain-classic
+langgraph
+langgraph-checkpoint-sqlite
+aiosqlite
+litellm[proxy]
+# PDF text extraction
+PyMuPDF

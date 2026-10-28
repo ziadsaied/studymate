@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- The UI is intentionally dependency-free: one HTML page, CSS file, and JavaScript file. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StudyMate AI | Learn with momentum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css?v=2">
+</head>
+<body>
+<!-- Desktop layout: conversation navigation on the left and the active chat on the right. -->
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">S</span>
+      <div>
+        <h1>StudyMate</h1>
+        <p>Your learning companion</p>
+      </div>
+    </div>
+
+    <button id="new-chat" class="new-chat-btn" type="button"><span>+</span> New study session</button>
+
+    <p class="sidebar-label">Recent sessions</p>
+
+    <!-- JavaScript fills this navigation with saved thread titles. -->
+    <nav class="thread-list" id="thread-list" aria-label="Conversations"></nav>
+
+    <div class="sidebar-footer">
+      <label class="upload-row" for="pdf-input">
+        <span class="upload-icon">+</span>
+        <span><strong>Add course material</strong><small>PDF notes and readings</small></span>
+        <input type="file" id="pdf-input" accept="application/pdf" hidden>
+      </label>
+      <p id="upload-status" class="upload-status" aria-live="polite"></p>
+
+      <div class="user-switcher">
+        <label for="user-select">CURRENT LEARNER</label>
+        <select id="user-select" aria-label="Choose user"></select>
+        <form id="add-user-form" class="add-user-form">
+          <input id="new-user-name" type="text" maxlength="50" placeholder="New user name" aria-label="New user name">
+          <button type="submit">Add</button>
+        </form>
+        <p id="user-status" class="user-status" aria-live="polite"></p>
+      </div>
+    </div>
+  </aside>
+
+  <main class="chat">
+    <header class="chat-header">
+      <div>
+        <span class="eyebrow">STUDY SPACE</span>
+        <h2 id="chat-title">New conversation</h2>
+      </div>
+      <span class="online-pill"><span></span> Ready to learn</span>
+    </header>
+
+    <!-- The empty state is moved in and out of this container as messages are rendered. -->
+    <div class="messages" id="messages">
+      <div class="empty-state" id="empty-state">
+        <div class="welcome-mark">✦</div>
+        <p class="welcome-kicker">WELCOME TO YOUR</p>
+        <h3>StudyMate AI</h3>
+        <p class="welcome-copy">Turn confusing course material into clear next steps, useful explanations, and study momentum.</p>
+        <div class="prompt-grid" aria-label="Suggested prompts">
+          <button type="button" class="prompt-card" data-prompt="Explain the key ideas in my course material"><span>✦</span><strong>Break it down</strong><small>Explain a tricky concept simply</small></button>
+          <button type="button" class="prompt-card" data-prompt="Create a focused study plan for my next exam"><span>◷</span><strong>Plan my study</strong><small>Build a focused plan for an exam</small></button>
+          <button type="button" class="prompt-card" data-prompt="Quiz me on the most important topics"><span>?</span><strong>Test my knowledge</strong><small>Practice with thoughtful questions</small></button>
+        </div>
+      </div>
+    </div>
+
+    <form id="chat-form" class="composer">
+      <div class="composer-box">
+        <textarea id="chat-input" placeholder="What would you like to understand today?" rows="1"></textarea>
+        <span class="composer-hint">Enter to send <i>•</i> Shift + Enter for a new line</span>
+      </div>
+      <button type="submit" id="send-btn" aria-label="Send message">↑</button>
+    </form>
+  </main>
+</div>
+<!-- The script owns all browser state and communicates with the /api endpoints. -->
+<script src="/static/app.js?v=2"></script>
+</body>
+</html>

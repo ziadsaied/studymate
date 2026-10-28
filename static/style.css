@@ -1,0 +1,529 @@
+/* Shared color and type tokens keep the interface visually consistent. */
+:root {
+  --bg-app: #f7f4ed;
+  --bg-sidebar: #172b2a;
+  --bg-panel: #ffffff;
+  --bg-user-bubble: #dceee9;
+  --border-hairline: rgba(23, 43, 42, 0.12);
+  --text-primary: #17302f;
+  --text-muted: #70817d;
+  --accent-brass: #d97745;
+  --accent-brass-dim: rgba(217, 119, 69, 0.14);
+  --accent-teal: #4c9b8f;
+  --sidebar-text: #f4f1e8;
+  --font-serif: "Source Serif 4", Georgia, serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+
+/* Make width and height calculations predictable for every component. */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: radial-gradient(circle at 72% 12%, rgba(76, 155, 143, 0.11), transparent 30%), var(--bg-app);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent-brass);
+  outline-offset: 2px;
+}
+
+/* The main desktop frame reserves a fixed-width navigation column. */
+.app {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
+}
+
+/* The sidebar owns conversation navigation and the PDF-upload action. */
+.sidebar {
+  background: var(--bg-sidebar);
+  color: var(--sidebar-text);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 18px 20px;
+  min-width: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px 28px;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: var(--accent-brass);
+  border-radius: 10px;
+  color: #fff8ef;
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.brand h1 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.brand p {
+  color: rgba(244, 241, 232, 0.55);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  margin: 2px 0 0;
+  text-transform: uppercase;
+}
+
+.new-chat-btn {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff8ef;
+  background: var(--accent-brass);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: filter 120ms ease;
+}
+
+.new-chat-btn span { font-size: 18px; line-height: 0; vertical-align: -1px; }
+
+.sidebar-label {
+  color: rgba(244, 241, 232, 0.45);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  margin: 28px 4px 8px;
+  text-transform: uppercase;
+}
+
+.new-chat-btn:hover {
+  filter: brightness(1.08);
+}
+
+/* This middle area grows and scrolls while the header and upload control stay visible. */
+.thread-list {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.thread-item {
+  font-size: 13.5px;
+  color: rgba(244, 241, 232, 0.62);
+  background: transparent;
+  border: none;
+  border-left: 3px solid transparent;
+  text-align: left;
+  padding: 9px 10px 9px 11px;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.thread-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--sidebar-text);
+}
+
+.thread-item.active {
+  border-left-color: var(--accent-brass);
+  background: var(--accent-brass-dim);
+  color: var(--sidebar-text);
+}
+
+.thread-list-empty {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 10px 11px;
+  line-height: 1.5;
+}
+
+.sidebar-footer {
+  border-top: 1px solid var(--border-hairline);
+  padding-top: 16px;
+  margin-top: 12px;
+}
+
+.upload-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(244, 241, 232, 0.72);
+  cursor: pointer;
+  padding: 6px 4px;
+  border-radius: 6px;
+  transition: color 120ms ease;
+}
+
+.upload-icon {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  color: var(--accent-brass);
+  font-size: 18px;
+}
+
+.upload-row strong, .upload-row small { display: block; }
+.upload-row strong { font-size: 12px; font-weight: 500; }
+.upload-row small { color: rgba(244, 241, 232, 0.4); font-size: 10px; margin-top: 2px; }
+
+.upload-row:hover {
+  color: var(--accent-brass);
+}
+
+.upload-status {
+  font-size: 12px;
+  color: var(--text-muted);
+  min-height: 16px;
+  margin: 6px 4px 0;
+}
+
+.user-switcher {
+  border-top: 1px solid var(--border-hairline);
+  margin-top: 12px;
+  padding: 14px 4px 0;
+}
+
+.user-switcher label {
+  display: block;
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.user-switcher select,
+.add-user-form input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 6px;
+  color: var(--sidebar-text);
+  font: inherit;
+  font-size: 13px;
+  padding: 8px;
+}
+
+.add-user-form {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.add-user-form input { min-width: 0; }
+
+.add-user-form button {
+  background: transparent;
+  border: 1px solid var(--accent-brass);
+  border-radius: 6px;
+  color: var(--accent-brass);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  padding: 0 9px;
+}
+
+.user-status {
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.35;
+  margin: 7px 0 0;
+  min-height: 15px;
+}
+
+/* The chat pane is a vertical layout: header, scrolling transcript, then composer. */
+.chat {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 48px;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.chat-header h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 19px;
+  margin: 0;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.eyebrow, .welcome-kicker {
+  color: var(--accent-brass);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.eyebrow { display: block; margin-bottom: 5px; }
+
+.online-pill { color: var(--text-muted); font-size: 11px; }
+.online-pill span { display: inline-block; width: 7px; height: 7px; background: var(--accent-teal); border-radius: 50%; margin-right: 5px; }
+
+/* Messages consume available space and scroll independently from the composer. */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 36px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.empty-state {
+  margin: auto;
+  max-width: 700px;
+  text-align: center;
+  color: var(--text-muted);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.welcome-mark { color: var(--accent-brass); font-size: 34px; line-height: 1; margin-bottom: 16px; }
+.welcome-kicker { margin: 0 0 7px; }
+.empty-state h3 { color: var(--text-primary); font-family: var(--font-serif); font-size: clamp(32px, 5vw, 52px); line-height: 1; margin: 0; }
+.welcome-copy { margin: 16px auto 28px; max-width: 470px; }
+.prompt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: left; }
+.prompt-card { min-height: 118px; background: rgba(255, 255, 255, 0.72); border: 1px solid var(--border-hairline); border-radius: 12px; color: var(--text-primary); cursor: pointer; padding: 15px; text-align: left; transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease; }
+.prompt-card:hover { border-color: var(--accent-brass); box-shadow: 0 8px 20px rgba(23, 43, 42, 0.08); transform: translateY(-2px); }
+.prompt-card span { color: var(--accent-brass); display: block; font-size: 18px; margin-bottom: 12px; }
+.prompt-card strong, .prompt-card small { display: block; }
+.prompt-card strong { font-size: 13px; }
+.prompt-card small { color: var(--text-muted); font-size: 11px; line-height: 1.4; margin-top: 5px; }
+
+.message {
+  max-width: 68%;
+  padding: 12px 16px;
+  line-height: 1.55;
+  font-size: 15px;
+}
+
+/* Alignment and bubble shape visually distinguish the student's messages. */
+.message.user {
+  align-self: flex-end;
+  background: var(--bg-user-bubble);
+  border-radius: 12px 12px 2px 12px;
+  font-family: var(--font-sans);
+}
+
+/* Assistant responses use the reading-oriented serif face. */
+.message.assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.86);
+  border-radius: 12px 12px 12px 2px;
+  font-family: var(--font-serif);
+}
+
+.message.system {
+  align-self: center;
+  background: transparent;
+  border: 1px dashed var(--border-hairline);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-family: var(--font-sans);
+}
+
+.message p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.sources {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.source-chip {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  color: var(--accent-brass);
+  border: 1px solid rgba(201, 161, 90, 0.35);
+  border-radius: 999px;
+  padding: 3px 9px;
+}
+
+/* A temporary status row is inserted while the network request is in flight. */
+.thinking {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-muted);
+  padding: 12px 16px;
+}
+
+.thinking-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.thinking-dots span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-brass);
+  animation: pulse 1.1s infinite ease-in-out;
+}
+
+.thinking-dots span:nth-child(2) { animation-delay: 0.15s; }
+.thinking-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes pulse {
+  0%, 80%, 100% { opacity: 0.25; transform: scale(0.85); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+/* Keep the input fixed at the bottom while transcript content scrolls above it. */
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 18px 48px 26px;
+  border-top: 1px solid var(--border-hairline);
+}
+
+.composer-box { flex: 1; position: relative; }
+
+.composer textarea {
+  width: 100%;
+  resize: none;
+  max-height: 160px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--border-hairline);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  line-height: 1.5;
+  padding: 13px 14px 29px;
+}
+
+.composer-hint { bottom: 7px; color: var(--text-muted); font-size: 10px; left: 14px; position: absolute; }
+.composer-hint i { color: var(--accent-brass); font-style: normal; padding: 0 5px; }
+
+.composer textarea:focus {
+  border-color: var(--accent-brass);
+}
+
+.composer button {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff8ef;
+  background: var(--accent-brass);
+  border: none;
+  border-radius: 10px;
+  width: 47px;
+  height: 47px;
+  padding: 0;
+  font-size: 22px;
+  cursor: pointer;
+  transition: filter 120ms ease, opacity 120ms ease;
+}
+
+.composer button:hover {
+  filter: brightness(1.08);
+}
+
+.composer button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 720px) {
+  /* On narrow screens, prioritize the active conversation over navigation history. */
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .sidebar {
+    flex-wrap: wrap;
+    align-items: center;
+    overflow: hidden;
+    padding: 14px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .thread-list, .sidebar-label, .upload-row, .upload-status {
+    display: none;
+  }
+
+  .sidebar-footer {
+    display: block;
+    border-top: none;
+    margin: 0 0 0 auto;
+    padding: 0;
+  }
+
+  .user-switcher {
+    border-top: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .user-switcher label { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Respect operating-system accessibility preferences. */
+  .thinking-dots span {
+    animation: none;
+  }
+
+  .brand { padding: 0; }
+  .new-chat-btn { margin-left: auto; }
+  .chat-header, .messages { padding-left: 18px; padding-right: 18px; }
+  .composer { padding: 12px 18px 18px; }
+  .prompt-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+  .prompt-card { min-height: 0; padding: 12px 14px; }
+  .prompt-card span { display: inline; margin-right: 8px; }
+  .prompt-card small { margin-left: 27px; }
+  .message { max-width: 88%; }
+}
